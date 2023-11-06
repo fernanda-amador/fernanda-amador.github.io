@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { SanitySchema } from "../../sanity.config"
 import { sanityClient } from "../sanityClient"
 import builder from "@sanity/image-url"
+import { Context } from "../Context"
 
 export default function ProjectDetails(params: { projectId: string | undefined, reference: React.RefObject<HTMLDialogElement> }) {
 
@@ -21,12 +22,24 @@ export default function ProjectDetails(params: { projectId: string | undefined, 
     })
   }, [params.projectId])
 
+  const context = useContext(Context);
+
+
+  const formatDate = useCallback((date: string | undefined) => {
+    if (date === undefined) return context?.proyect_date_present || 'now'
+    const d = new Date(date)
+    const month = d.toLocaleString(context?.lang || 'default', { month: 'short' })
+    return `${month.charAt(0).toUpperCase() + month.slice(1)} ${d.getFullYear()}`
+  }, [context?.lang, context?.proyect_date_present])
 
   const content = project === undefined
     ? ( <div className="flex justify-center"><span className="loading loading-spinner loading-lg"></span></div> )
     : (
       <>
-        <h3 className="font-bold text-5xl">{project.title}</h3>
+        <div className="flex flex-col items-baseline">
+          <h3 className="font-bold text-5xl">{project.title}</h3>
+          {project.dates && <p className="text-base">{formatDate(project.dates.start)} - {formatDate(project.dates.end)}</p>}
+        </div>
         <p className="py-4 text-base whitespace-pre-wrap">{project.description}</p>
 
         <div className="grid grid-cols-6 md:grid-cols-10 grid-rows-4 gap-2">

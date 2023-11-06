@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { sanityClient } from "../sanityClient"
 import builder from "@sanity/image-url";
 import { SanitySchema } from "../../sanity.config";
 import { ImageUrlBuilder } from "sanity";
 import ProjectDetails from "./ProjectDetails";
+import { Context } from "../Context";
 
 const imgSrc = (pic: SanitySchema["project"]["pictures"], imageBuilder: ImageUrlBuilder, clientWidth: number, clientHeight: number) => {
   if (!pic || clientHeight === 0 || clientWidth === 0) return ""
@@ -55,14 +56,9 @@ function GridTile(params: { importance: number, project: SanitySchema["project"]
 
 
 export default function  MainGrid() {
-  const [projects, setProjects] = useState<SanitySchema["project"][]>([]);
   const bl = builder(sanityClient);
-  useEffect(() => {
-    sanityClient.fetch(`*[_type == "main-info"][0].highlighted_projects[]->{_id, title, headline, pictures[0]}`)
-    .then((data) => {
-      setProjects(data)
-    })
-  }, [])
+  
+  const projects = (useContext(Context)?.highlighted_projects || []) as unknown as SanitySchema["project"][]
 
   return (
     <div className="grid grid-rows-6 md:grid-rows-none grid-cols-6 gap-2 min-h-full max-w-screen-2xl flex-grow">

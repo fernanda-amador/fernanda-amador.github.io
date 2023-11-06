@@ -21,5 +21,29 @@ export const MainInfo = defineType({
       of: [defineArrayMember({ type: "reference", to: [{ type: "project" } as const] })],
       validation: (Rule) => Rule.unique().length(5),
     }),
+    defineField({
+      name: "about",
+      title: "About",
+      type: "text",
+    }),
+    defineField({
+      name: "proyect_date_present",
+      title: "Proyect Date Present Display",
+      type: "string",
+      description: "text to be displayed when the project is still in progress (e.g. 'present' will display 'Feb 2019 - present')",
+      initialValue: "actualidad",
+    }),
+    defineField({
+      name: "lang",
+      title: "Language",
+      type: "string",
+      initialValue: "es",
+      options: {
+        list: [
+          { title: "English", value: "en" },
+          { title: "Spanish", value: "es" },
+        ],
+      },
+    }),
   ],
 });

@@ -25,6 +25,31 @@ export const Project = defineType({
       type: "string",
     }),
     defineField({
+      name: "dates",
+      title: "Dates",
+      type: "object",
+      fields: [
+        defineField({
+          name: "start",
+          title: "Start",
+          type: "date",
+          options: {
+            dateFormat: "YYYY-MM",
+          },
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: "end",
+          title: "End",
+          type: "date",
+          options: {
+            dateFormat: "YYYY-MM",
+          },
+          validation: (Rule) => Rule.min(Rule.valueOfField("start")),
+        }),
+      ],
+    }),
+    defineField({
       name: "pictures",
       title: "Pictures",
       type: "array",
