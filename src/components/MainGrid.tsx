@@ -44,9 +44,9 @@ function GridTile(params: { importance: number, project: SanitySchema["project"]
         style={{ backgroundImage: `url(${imgUrl})` }}
         onClick={()=>{modalRef.current?.showModal(); setSelectedProject(params.project._id)}}
       >
-        <div className="card-body justify-end">
-          <h2 className="text-4xl">{params.project.title}</h2>
-          <p className="text-lg grow-0"> {params.project.headline} </p>
+        <div className="card-body justify-end -space-y-2 md:-space-y-0">
+          <h2 className="text-xl md:text-4xl">{params.project.title}</h2>
+          <p className="text-sm md:text-lg grow-0"> {params.project.headline} </p>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@ export default function  MainGrid() {
   }, [])
 
   return (
-    <div className="grid grid-rows-7 grid-cols-6 gap-2 min-h-full max-w-screen-2xl flex-grow">
+    <div className="grid grid-rows-6 md:grid-rows-none grid-cols-6 gap-2 min-h-full max-w-screen-2xl flex-grow">
       <GridTile importance={3} project={projects[0]} imageBuilder={bl} />
       <GridTile importance={2} project={projects[1]} imageBuilder={bl} />
       <GridTile importance={2} project={projects[2]} imageBuilder={bl} />

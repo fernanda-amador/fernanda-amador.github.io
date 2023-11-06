@@ -4,11 +4,8 @@ export default function Landing() {
     <div className="py-4">
       <h1 className="text-6xl text-center py-4" style={{ fontFamily: "AuthenticSignature" }}>Fernanda Amador</h1>
 
-      <div className="w-screen h-10/12-screen px-4 md:px-24 flex justify-center">
+      <div className="w-screen h-73vh md:h-5/6-screen px-4 md:px-24 flex justify-center">
         <MainGrid />
-      </div>
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        hello
       </div>
     </div>
   );
