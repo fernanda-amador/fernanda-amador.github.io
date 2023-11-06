@@ -11,7 +11,10 @@ export default function ProjectDetails(params: { projectId: string | undefined, 
   const imageBuilder = builder(sanityClient)
 
   useEffect(() => {
-    if (!params.projectId || params.projectId === '') return
+    if (!params.projectId || params.projectId === '') {
+      setProject(undefined)
+      return
+    }
     sanityClient.fetch(`*[_id == "${params.projectId}"]`)
     .then((data) => {
       setProject(data[0])
@@ -47,14 +50,14 @@ export default function ProjectDetails(params: { projectId: string | undefined, 
           {(project.pictures || []).map((pic, i) => {
             const src = imageBuilder.image(pic).auto("format").width(150).height(150).fit('clip').url()
             return (
-              <img key={pic._key} className={`col-span-1 row-span-1 rounded-2xl border-primary-focus ${i===selectedImage?'border-4':''}`} src={src} alt="" onClick={() => setSelectedImage(i)} />
+              <img key={pic._key} className={`hover:brightness-75 cursor-pointer col-span-1 row-span-1 rounded-2xl border-primary-focus ${i===selectedImage?'border-4 brightness-75':''}`} src={src} alt="" onClick={() => setSelectedImage(i)} />
             )
           })}
         </div>
 
         <div className="modal-action">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => setProject(undefined)}>✕</button>
           </form>
         </div>
       </>
@@ -66,7 +69,7 @@ export default function ProjectDetails(params: { projectId: string | undefined, 
             {content}
           </div>
         <form method="dialog" className="modal-backdrop">
-          <button>close</button>
+          <button onClick={() => setProject(undefined)}>close</button>
         </form>
       </dialog>
   )

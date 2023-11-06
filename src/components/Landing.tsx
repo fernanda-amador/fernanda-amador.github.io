@@ -1,15 +1,18 @@
 import MainGrid from "./MainGrid";
 import { SanitySchema } from "../../sanity.config";
 import { sanityClient } from "../sanityClient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Context } from "../Context";
 export default function Landing() {
 
   const [siteInfo, setSiteInfo] = useState<SanitySchema["main-info"] | undefined>(undefined)
-  sanityClient.fetch<SanitySchema["main-info"]>("*[_type == 'main-info'][0]{..., highlighted_projects[]->{..., pictures[0]}}")
-  .then((data) => {
-    setSiteInfo(data)
-  })
+  const lang = 'es'
+  useEffect(() => {
+    sanityClient.fetch<SanitySchema["main-info"]>(`*[_type == 'main-info' && lang == '${lang}'][0]{..., highlighted_projects[]->{..., pictures[0]}}`)
+    .then((data) => {
+      setSiteInfo(data)
+    })
+  }, [])
 
   return (
     <Context.Provider value={siteInfo}>
