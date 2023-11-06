@@ -10,6 +10,7 @@ export default defineConfig({
     minify: true,
     target: 'es2015',
   },
+assetsInclude: ['**/*.otf'],
   resolve: {
     alias: {
       '@assets': '/src/assets',
