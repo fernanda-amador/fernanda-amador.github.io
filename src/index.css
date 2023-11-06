@@ -31,5 +31,5 @@
 
 @font-face {
   font-family: "AuthenticSignature";
-  src: url("src/assets/AuthenticSignature.otf") format("opentype");
+  src: url("AuthenticSignature.otf") format("opentype");
 }
